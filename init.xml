@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<installer>
+	<information>
+		<info id="id" value="newword"/>
+		<info id="build" value="1"/>
+		<!--<info id="channel" value="official"/>-->
+		<info id="status" value="enabled"/>
+		<info id="name" value="_installer_newword_title"/>
+		<info id="type" value="_installer_newword_type"/>
+		<info id="category" value="_installer_newword_category"/>
+		<info id="popular" value="1"/>
+		<info id="db-prefix" value="wp_"/>
+		<info id="created" value="2017-08-17"/>
+		<info id="description" value="_installer_newword_description"/>
+		<info id="authordescription" value="_installer_newword_authordescription"/>
+		<!--<info id="stamp-index.php" search="!([^&quot;]powered\s+by\s+(?:&lt;a href=.[^'&quot;]+.&gt;)?\s*WordPress)\.?\s*&lt;/a&gt;\.?!sim" replace="$1&lt;/a&gt;, {stamp style='background:none;'}."/>-->
+	</information>
+
+	<links>
+		<link id="site" value="http://wordpress.org"/>
+		<link id="showcase" value="http://wordpress.org/showcase"/>
+		<link id="docs" value="http://codex.wordpress.org"/>
+		<link id="faq" value="http://codex.wordpress.org/FAQ"/>
+		<link id="support" value="http://wordpress.org/support"/> 
+	</links>
+
+	<versions>
+		<branch id="current">
+			<version id="4.8.1" upgrade="skip" install="auto"/>
+		</branch>
+		<branch id="previous">
+		</branch>
+	</versions>
+</installer>

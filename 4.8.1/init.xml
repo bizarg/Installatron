@@ -1,0 +1,116 @@
+<?xml version='1.0'?>
+<installer>
+    <information>
+        <info id="version" value="4.8.1"/>
+        <info id="license" value="_apps_opensource"/>
+        <info id="date" value="2017-08-17"/>
+    </information>
+    <links>
+        <link id="admin" value="wp-admin"/>
+        <link id="edit-1" value="wp-config.php"/>
+    </links>
+    <requirements>
+        <requirement id="itron-version" value="5.0.0"/>
+        <requirement id="diskspace" value="49"/>
+        <requirement id="database" value="1"/>
+        <requirement id="db-type" value="mysql"/>
+        <requirement id="db-prefix-support" value="1"/>
+        <requirement id="db-prefix-underscore" value="1"/>
+        <requirement id="php-url-fopen" value="1"/>
+        <requirement id="php-register-globals" value="0"/>
+        <requirement id="php-magic-quotes" value="0"/>
+        <requirement id="php-safe-mode" value="0"/>
+        <requirement id="php-open-basedir" value="1"/>
+        <requirement id="php-short-open-tag" value="0"/>
+        <requirement id="php-version-minimum" value="5.4"/>
+    </requirements>
+    <archives>
+        <archive id="main" url="https://wordpress.org/wordpress-4.8.1.zip" type="zip"/>
+        <archive id="zeebizzcard" url="http://wordpress.org/themes/download/zeebizzcard.1.4.zip" type="zip"/>
+        <archive id="wp_supercache" url="http://downloads.wordpress.org/plugin/wp-super-cache.1.0.zip" type="zip"/>
+    </archives>
+    <skeleton>
+        <file id="wp-admin"/>
+        <file id="wp-content"/>
+        <file id="wp-includes"/>
+        <file id="wp-config.php" isconfig="true"/>
+        <file id="wp-activate.php"/>
+        <file id="wp-app.php"/>
+        <file id="wp-blog-header.php"/>
+        <file id="wp-comments-post.php"/>
+        <file id="wp-cron.php"/>
+        <file id="wp-links-opml.php"/>
+        <file id="wp-load.php"/>
+        <file id="wp-login.php"/>
+        <file id="wp-mail.php"/>
+        <file id="wp-pass.php"/>
+        <file id="wp-register.php"/>
+        <file id="wp-settings.php"/>
+        <file id="wp-signup.php"/>
+        <file id="wp-trackback.php"/>
+        <file id="xmlrpc.php"/>
+        <table id="commentmeta"/>
+        <table id="comments"/>
+        <table id="links"/>
+        <table id="options"/>
+        <table id="postmeta"/>
+        <table id="posts"/>
+        <table id="term_relationships"/>
+        <table id="term_taxonomy"/>
+        <table id="terms"/>
+        <table id="usermeta"/>
+        <table id="users"/>
+    </skeleton>
+    <fields>
+      <field id="login">
+            <get>
+                <?php
+                return $this->db_query("SELECT u.`user_login` FROM `{$this->db_prefix}users` u, `{$this->db_prefix}usermeta` m WHERE u.`ID`=m.`user_id` AND m.`meta_key`='{$this->db_prefix}user_level' AND m.`meta_value`=10 ORDER BY u.`ID` ASC LIMIT 1", null, "user_login");
+                ?>
+            </get>
+            <set>
+                <?php
+                $uid = $this->db_query("SELECT u.`ID` FROM `{$this->db_prefix}users` u, `{$this->db_prefix}usermeta` m WHERE u.`ID`=m.`user_id` AND m.`meta_key`='{$this->db_prefix}user_level' AND m.`meta_value`=10 ORDER BY u.`ID` ASC LIMIT 1", null, "ID");
+                $this->db_query("UPDATE `{$this->db_prefix}users` SET `user_login`=? WHERE `ID`=? LIMIT 1", array($this->input["field_login"], $uid));
+                ?>
+            </set>
+        </field>
+        <field id="passwd">
+            <set>
+                <?php
+                $uid = $this->db_query("SELECT u.`ID` FROM `{$this->db_prefix}users` u, `{$this->db_prefix}usermeta` m WHERE u.`ID`=m.`user_id` AND m.`meta_key`='{$this->db_prefix}user_level' AND m.`meta_value`=10 ORDER BY u.`ID` ASC LIMIT 1", null, "ID");
+                $this->db_query("UPDATE `{$this->db_prefix}users` SET `user_pass`=? WHERE `ID`=? LIMIT 1", array(md5($this->input["field_passwd"]), $uid));
+                ?>
+            </set>
+        </field>
+        <field id="email">
+            <get>
+                <?php
+                return $this->db_query("SELECT u.`user_email` FROM `{$this->db_prefix}users` u, `{$this->db_prefix}usermeta` m WHERE u.`ID`=m.`user_id` AND m.`meta_key`='{$this->db_prefix}user_level' AND m.`meta_value`=10 ORDER BY u.`ID` ASC LIMIT 1", null, "user_email");
+                ?>
+            </get>
+            <set>
+                <?php
+                $uid = $this->db_query("SELECT u.`ID` FROM `{$this->db_prefix}users` u, `{$this->db_prefix}usermeta` m WHERE u.`ID`=m.`user_id` AND m.`meta_key`='{$this->db_prefix}user_level' AND m.`meta_value`=10 ORDER BY u.`ID` ASC LIMIT 1", null, "ID");
+                $this->db_query("UPDATE `{$this->db_prefix}users` SET `user_email`=? WHERE `ID`=? LIMIT 1", array($this->input["field_email"], $uid));
+                ?>
+            </set>
+        </field>
+        <field id="sitetitle">
+            <get>
+                <?php
+                $r = $this->db_query("SELECT `option_value` FROM `{$this->db_prefix}options` WHERE `option_name`='blogname'", null, "option_value");
+                if ( $r === false ) return false;
+                return html_entity_decode($r, ENT_QUOTES);
+                ?>
+            </get>
+            <set>
+                <?php $this->db_query("UPDATE `{$this->db_prefix}options` SET `option_value`=? WHERE `option_name`='blogname'",array(htmlentities($this->input["field_sitetitle"], ENT_COMPAT)));?>
+            </set>
+        </field>   
+    </fields>
+    <languages>
+        <language id="en" value="en-US"/>
+        <language id="ru" value="ru-RU"/>
+    </languages>
+</installer>

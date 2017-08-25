@@ -1,0 +1,34 @@
+a:8:{s:4:"info";a:3:{s:7:"version";s:5:"4.8.1";s:7:"license";s:16:"_apps_opensource";s:4:"date";s:10:"2017-08-17";}s:4:"link";a:2:{s:5:"admin";s:8:"wp-admin";s:6:"edit-1";s:13:"wp-config.php";}s:11:"requirement";a:13:{s:13:"itron-version";s:5:"5.0.0";s:9:"diskspace";s:2:"49";s:8:"database";s:1:"1";s:7:"db-type";s:5:"mysql";s:17:"db-prefix-support";s:1:"1";s:20:"db-prefix-underscore";s:1:"1";s:13:"php-url-fopen";s:1:"1";s:20:"php-register-globals";s:1:"0";s:16:"php-magic-quotes";s:1:"0";s:13:"php-safe-mode";s:1:"0";s:16:"php-open-basedir";s:1:"1";s:18:"php-short-open-tag";s:1:"0";s:19:"php-version-minimum";s:3:"5.4";}s:7:"archive";a:3:{s:4:"main";a:2:{s:3:"url";s:41:"https://wordpress.org/wordpress-4.8.1.zip";s:4:"type";s:3:"zip";}s:11:"zeebizzcard";a:2:{s:3:"url";s:56:"http://wordpress.org/themes/download/zeebizzcard.1.4.zip";s:4:"type";s:3:"zip";}s:13:"wp_supercache";a:2:{s:3:"url";s:60:"http://downloads.wordpress.org/plugin/wp-super-cache.1.0.zip";s:4:"type";s:3:"zip";}}s:13:"skeleton_file";a:19:{s:8:"wp-admin";s:8:"wp-admin";s:10:"wp-content";s:10:"wp-content";s:11:"wp-includes";s:11:"wp-includes";s:13:"wp-config.php";a:1:{s:8:"isconfig";s:4:"true";}s:15:"wp-activate.php";s:15:"wp-activate.php";s:10:"wp-app.php";s:10:"wp-app.php";s:18:"wp-blog-header.php";s:18:"wp-blog-header.php";s:20:"wp-comments-post.php";s:20:"wp-comments-post.php";s:11:"wp-cron.php";s:11:"wp-cron.php";s:17:"wp-links-opml.php";s:17:"wp-links-opml.php";s:11:"wp-load.php";s:11:"wp-load.php";s:12:"wp-login.php";s:12:"wp-login.php";s:11:"wp-mail.php";s:11:"wp-mail.php";s:11:"wp-pass.php";s:11:"wp-pass.php";s:15:"wp-register.php";s:15:"wp-register.php";s:15:"wp-settings.php";s:15:"wp-settings.php";s:13:"wp-signup.php";s:13:"wp-signup.php";s:16:"wp-trackback.php";s:16:"wp-trackback.php";s:10:"xmlrpc.php";s:10:"xmlrpc.php";}s:14:"skeleton_table";a:11:{s:11:"commentmeta";s:11:"commentmeta";s:8:"comments";s:8:"comments";s:5:"links";s:5:"links";s:7:"options";s:7:"options";s:8:"postmeta";s:8:"postmeta";s:5:"posts";s:5:"posts";s:18:"term_relationships";s:18:"term_relationships";s:13:"term_taxonomy";s:13:"term_taxonomy";s:5:"terms";s:5:"terms";s:8:"usermeta";s:8:"usermeta";s:5:"users";s:5:"users";}s:8:"language";a:2:{s:2:"en";s:5:"en-US";s:2:"ru";s:5:"ru-RU";}s:5:"field";a:4:{s:5:"login";a:8:{s:2:"id";s:5:"login";s:5:"label";s:19:"_info_adminusername";s:4:"text";s:23:"_settings_adminusername";s:4:"type";s:4:"text";s:7:"default";s:5:"admin";s:6:"verify";s:158:"
+				if ( !isset($this->input["field_login"]) || !isset($this->input["field_login"][1]) )
+				{
+					$this->addError("_errors_tooshort", "field_login");
+				}";s:3:"get";s:309:"/* itron phpized */
+                return $this->db_query("SELECT u.`user_login` FROM `{$this->db_prefix}users` u, `{$this->db_prefix}usermeta` m WHERE u.`ID`=m.`user_id` AND m.`meta_key`='{$this->db_prefix}user_level' AND m.`meta_value`=10 ORDER BY u.`ID` ASC LIMIT 1", null, "user_login");
+                ";s:3:"set";s:444:"/* itron phpized */
+                $uid = $this->db_query("SELECT u.`ID` FROM `{$this->db_prefix}users` u, `{$this->db_prefix}usermeta` m WHERE u.`ID`=m.`user_id` AND m.`meta_key`='{$this->db_prefix}user_level' AND m.`meta_value`=10 ORDER BY u.`ID` ASC LIMIT 1", null, "ID");
+                $this->db_query("UPDATE `{$this->db_prefix}users` SET `user_login`=? WHERE `ID`=? LIMIT 1", array($this->input["field_login"], $uid));
+                ";}s:6:"passwd";a:6:{s:2:"id";s:6:"passwd";s:5:"label";s:19:"_info_adminpassword";s:4:"text";s:23:"_settings_adminpassword";s:4:"type";s:8:"password";s:6:"verify";s:161:"
+				if ( !isset($this->input["field_passwd"]) || !isset($this->input["field_passwd"][1]) )
+				{
+					$this->addError("_errors_tooshort", "field_passwd");
+				}";s:3:"set";s:449:"/* itron phpized */
+                $uid = $this->db_query("SELECT u.`ID` FROM `{$this->db_prefix}users` u, `{$this->db_prefix}usermeta` m WHERE u.`ID`=m.`user_id` AND m.`meta_key`='{$this->db_prefix}user_level' AND m.`meta_value`=10 ORDER BY u.`ID` ASC LIMIT 1", null, "ID");
+                $this->db_query("UPDATE `{$this->db_prefix}users` SET `user_pass`=? WHERE `ID`=? LIMIT 1", array(md5($this->input["field_passwd"]), $uid));
+                ";}s:5:"email";a:7:{s:2:"id";s:5:"email";s:5:"label";s:16:"_info_adminemail";s:4:"text";s:20:"_settings_adminemail";s:4:"type";s:4:"text";s:6:"verify";s:158:"
+				if ( !isset($this->input["field_email"]) || !isset($this->input["field_email"][1]) )
+				{
+					$this->addError("_errors_tooshort", "field_email");
+				}";s:3:"get";s:309:"/* itron phpized */
+                return $this->db_query("SELECT u.`user_email` FROM `{$this->db_prefix}users` u, `{$this->db_prefix}usermeta` m WHERE u.`ID`=m.`user_id` AND m.`meta_key`='{$this->db_prefix}user_level' AND m.`meta_value`=10 ORDER BY u.`ID` ASC LIMIT 1", null, "user_email");
+                ";s:3:"set";s:444:"/* itron phpized */
+                $uid = $this->db_query("SELECT u.`ID` FROM `{$this->db_prefix}users` u, `{$this->db_prefix}usermeta` m WHERE u.`ID`=m.`user_id` AND m.`meta_key`='{$this->db_prefix}user_level' AND m.`meta_value`=10 ORDER BY u.`ID` ASC LIMIT 1", null, "ID");
+                $this->db_query("UPDATE `{$this->db_prefix}users` SET `user_email`=? WHERE `ID`=? LIMIT 1", array($this->input["field_email"], $uid));
+                ";}s:9:"sitetitle";a:7:{s:2:"id";s:9:"sitetitle";s:5:"label";s:15:"_info_sitetitle";s:4:"text";s:19:"_settings_sitetitle";s:4:"type";s:4:"text";s:6:"verify";s:170:"
+				if ( !isset($this->input["field_sitetitle"]) || !isset($this->input["field_sitetitle"][1]) )
+				{
+					$this->addError("_errors_tooshort", "field_sitetitle");
+				}";s:3:"get";s:294:"/* itron phpized */
+                $r = $this->db_query("SELECT `option_value` FROM `{$this->db_prefix}options` WHERE `option_name`='blogname'", null, "option_value");
+                if ( $r === false ) return false;
+                return html_entity_decode($r, ENT_QUOTES);
+                ";s:3:"set";s:191:"/* itron phpized */ $this->db_query("UPDATE `{$this->db_prefix}options` SET `option_value`=? WHERE `option_name`='blogname'",array(htmlentities($this->input["field_sitetitle"], ENT_COMPAT)));";}}}
